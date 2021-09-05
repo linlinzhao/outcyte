@@ -17,6 +17,6 @@ How to:
 
 ```python run_outcyte.py /path/to/your/fasta/file /outcyte-sp/or/outcyte-ups/or/outcyte```
 
-The last field of the command specifies the method you would want to use, it could be either one of "outcyte-sp", "outcyte-ups" or "outcyte". It is basically the same the web version. 
+The last field of the command specifies the method you would want to use, it could be either one of "outcyte-sp", "outcyte-ups" or "outcyte". It is basically the same as the web version. 
 
 4. The result will be stored in the subfolder "results". 
