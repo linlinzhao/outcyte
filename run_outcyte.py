@@ -1,11 +1,10 @@
-#from outcyte.outcyte_sp import run_sp
-#from outcyte.outcyte_ups import run_ups
-from outcyte_sp import run_sp
-from outcyte_ups import run_ups
+import os
 import re
 import argparse
 import Bio.SeqIO as sio 
 import numpy as np
+from outcyte_sp import run_sp
+from outcyte_ups import run_ups
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -59,6 +58,8 @@ def run(seqID, seqs, method, fname):
                 res_ups = run_ups(id_nc, seq_nc, fname)
                 res_sp[nc_index] = res_ups
                 res = res_sp
+            if not os.path.isdir('./results'):
+                os.makedirs('./results/', exist_ok=True)
             np.savetxt(
                 './results/{}.txt'.format(fname),
                 res,
