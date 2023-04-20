@@ -25,7 +25,7 @@ FEATURE_NAMES = [
     'positive_c', #1
 ]
 
-def run_ups(seqID, seqs, fname, show_contribution=False):
+def run_ups(seqID, seqs, fname, outdir, show_contribution=False):
     '''
     run ups model on the input sequences.
     '''
@@ -54,7 +54,7 @@ def run_ups(seqID, seqs, fname, show_contribution=False):
     array4save = np.vstack((ids, np.asarray(classes), np.around(np.amax(val[2], axis=1), 4))).T
     array_ups = np.concatenate((np.expand_dims(ids, 1), np.around(val[2], 4)), axis=1)
     np.savetxt(
-        './results/{}_ups.txt'.format(fname),
+        './{}/{}_ups.txt'.format(outdir,fname),
         #np.around(val[2], 4),
         #val,
         array_ups,
@@ -210,8 +210,8 @@ def read_fasta(inputs):
 
     seqs = [('').join(i.split('\n')) for i in seqs]
     n_seq = len(ids)
-    if n_seq > 100: #the maximum number of query sequence is 100
-        raise ValueError('The maximum number of sequence is 100!')
+    if n_seq > 100000: # change limit of 100, to create larger fasta for outcyte prediction
+        raise ValueError('The maximum number of sequence is 100 000!')
     return ids, seqs
 
 def string_replace(text, dic):
