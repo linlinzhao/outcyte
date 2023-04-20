@@ -21,7 +21,7 @@ This is the standalone version of [OutCyte](outcyte.com) and here is the [paper]
 
 where "outcyte-model" can be : 
 
-```outcyte-sp  | outcyte-ups | outcyte``
+``` outcyte-sp  | outcyte-ups | outcyte ```
 
 The last field of the command specifies the method you would want to use, it could be either one of "outcyte-sp", "outcyte-ups" or "outcyte". It is basically the same as the web version. 
 
