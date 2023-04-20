@@ -8,7 +8,7 @@ import pandas as pd
 import sys
 import re
 
-def run_sp(seqID, seqs, fname):
+def run_sp(seqID, seqs, fname,outdir):
     """predictions for the input sequences"""
     predictions = []
     scores = []
