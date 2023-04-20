@@ -12,17 +12,14 @@ This is the standalone version of [OutCyte](outcyte.com) and here is the [paper]
 
 1. Change work directory to "outcyte".
 
-2. Set up a virtual environment with `pip install -r requirements.txt`, then activate the python virtual environment by running the following command:
-```source ./bin/activate```
+2. Set up a virtual environment with conda :
+  `conda create -n outcyte --file requirements.txt`, then activate the python virtual environment by running the following command:
+```conda activate outcyte```
 
 3. Now you can annotate your fasta file by typing:
 
 ```python run_outcyte.py /path/to/your/fasta/file <outcyte-model>  <output_dir> ```
 
-where "outcyte-model" can be : 
-
-``` outcyte-sp  | outcyte-ups | outcyte ```
-
-The last field of the command specifies the method you would want to use, it could be either one of "outcyte-sp", "outcyte-ups" or "outcyte". It is basically the same as the web version. 
+where "outcyte-model" specifies the method you would want to use, so it could be either one of "outcyte-sp", "outcyte-ups" or "outcyte". It is basically the same as the web version. 
 
 4. The results will be stored in the subfolder you define as  < output_dir >. 
