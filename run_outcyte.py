@@ -12,11 +12,12 @@ def run_file():
     parser = argparse.ArgumentParser()
     parser.add_argument('fasta_file', type=str)
     parser.add_argument('method', type=str)
+    parser.add_argument('results_dir', type=str)
     args = parser.parse_args()
     ids, seqs = fasta_reader(args.fasta_file)
     #method = 'outcyte-ups'
     name = args.fasta_file.split('/')[-1].split('.')[0]
-    res = run(ids, seqs, args.method, name)
+    res = run(ids, seqs, args.method, args.results_dir, name)
     #print(res)
     return res
 
@@ -32,22 +33,22 @@ def fasta_reader(inputs):
         ids.append(str(r.id))
     return ids, seqs
 
-def run(seqID, seqs, method, fname):
+def run(seqID, seqs, method, outdir, fname):
     """API to take user input data from the frontend"""
 
     #seqID, seqs = read_fasta_alt(inputs, splitter)
     if len(seqs) > 100000:
-        return "Maximal number of sequences is 100."
+        return "Maximal number of sequences is 100 000."
     #while '\r' in seqs or '\n' in seqs:
     #    seqs.remove('\r')
     else:
         if method == 'outcyte-sp':
-            res = run_sp(seqID, seqs, fname)
+            res = run_sp(seqID, seqs, fname, outdir)
         elif method == 'outcyte-ups':
-            res = run_ups(seqID, seqs, fname)
+            res = run_ups(seqID, seqs, fname, outdir)
         else:
-            fname = fname + '_pipeline'
-            res_sp = run_sp(seqID, seqs, fname)
+            fname = fname + '_outcyte-pipeline'
+            res_sp = run_sp(seqID, seqs, fname, outdir)
             pred_class = res_sp[:, 1]
             nc_index = (pred_class == 'Intracellular').nonzero()[0]
             #print(nc_index)
@@ -55,15 +56,17 @@ def run(seqID, seqs, method, fname):
                 return res_sp
             else:
                 id_nc, seq_nc = [seqID[i] for i in nc_index], [seqs[i] for i in nc_index]
-                res_ups = run_ups(id_nc, seq_nc, fname)
+                res_ups = run_ups(id_nc, seq_nc, fname, outdir)
                 res_sp[nc_index] = res_ups
                 res = res_sp
-            if not os.path.isdir('./results'):
-                os.makedirs('./results/', exist_ok=True)
+            #-> use user's output directory    
+            if not os.path.isdir(outdir):
+               os.makedirs(outdir, exist_ok=True)
             np.savetxt(
-                './results/{}.txt'.format(fname),
+                './{}/{}.txt'.format(outdir,fname),
                 res,
-                fmt='%s'
+                fmt='%s',
+                delimiter="\t"
             )
         return res
 
